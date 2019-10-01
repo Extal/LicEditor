@@ -4,21 +4,31 @@ import os
 """from pathlib import Path"""
 
 parser = argparse.ArgumentParser(description='Update Copyright for GAMS files.')
+
+
 parser.add_argument('-p', help='folder path for the repository')
 """parser.add_argument('-y', help='Current year') will be implemented later either with a date module or manually"""
 
+"""if there are no arguments show help"""
 if len(sys.argv)==1:
     parser.print_help(sys.stderr)
     sys.exit(1)
+    
+    
+"""if there are incorrect arguments, show help"""
+try:
+    options = parser.parse_args()
+except:
+    parser.print_help()
+    sys.exit(0)
+
 
 
 
 """data_folder = Path()"""
 args = parser.parse_args()
 print(args)
-print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 print(sys.argv)
-"""parser.print_help()"""
 
 """print(sys.argv[2])"""
 
