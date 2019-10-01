@@ -30,13 +30,13 @@ args = parser.parse_args()
 print(args)
 print(sys.argv)
 
-"""print(sys.argv[2])"""
+print(sys.argv[2])
 
 """argument check if sys.argv[1] """
 
 
 """ get the files list """
-"""path = str(sys.argv[2])
+path = str(sys.argv[2])
 
 files = []
 # r=root, d=directories, f = files
@@ -51,5 +51,12 @@ for r, d, f in os.walk(path):
         elif '.pri' in file:
             files.append(os.path.join(r, file))
 for f in files:
-    print(f)"""
-
+    print(f)
+    
+check = input('These files will be altered, are you sure you want to proceed? Y/N: ')
+if check == 'n' or check == 'N':
+    print('The script will be exited. You can restart the procedure with the correct path')
+else:
+    '''do the processing'''
+    
+    
