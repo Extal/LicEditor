@@ -1,10 +1,8 @@
 import argparse
 import sys
 import os
-"""from pathlib import Path"""
 
 parser = argparse.ArgumentParser(description='Update Copyright for GAMS files.')
-
 
 parser.add_argument('-p', help='folder path for the repository')
 """parser.add_argument('-y', help='Current year') will be implemented later either with a date module or manually"""
@@ -12,8 +10,7 @@ parser.add_argument('-p', help='folder path for the repository')
 """if there are no arguments show help"""
 if len(sys.argv)==1:
     parser.print_help(sys.stderr)
-    sys.exit(1)
-    
+    sys.exit(1)   
     
 """if there are incorrect arguments, show help"""
 try:
@@ -22,18 +19,12 @@ except:
     parser.print_help()
     sys.exit(0)
 
-
-
-
 """data_folder = Path()"""
 args = parser.parse_args()
+"""
 print(args)
 print(sys.argv)
-
-print(sys.argv[2])
-
-"""argument check if sys.argv[1] """
-
+print(sys.argv[2])"""
 
 """ get the files list """
 path = str(sys.argv[2])
@@ -56,7 +47,8 @@ for f in files:
 check = input('These files will be altered, are you sure you want to proceed? Y/N: ')
 if check == 'n' or check == 'N':
     print('The script will be exited. You can restart the procedure with the correct path')
+    sys.exit(0)
 else:
     '''do the processing'''
-    
-    
+
+
