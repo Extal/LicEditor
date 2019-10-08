@@ -1,6 +1,13 @@
 import argparse
 import sys
 import os
+import csv
+
+def yearUpdate( filepath ):
+    with open(filepath) as f:
+        lines = [line.rstrip('\n') for line in open(filepath)]
+        print ("Read String is : ",lines[:5])
+        
 
 parser = argparse.ArgumentParser(description='Update Copyright for GAMS files.')
 
@@ -24,7 +31,7 @@ args = parser.parse_args()
 """
 print(args)
 print(sys.argv)
-print(sys.argv[2])"""
+print(sys.argv[2]) inline function"""
 
 """ get the files list """
 path = str(sys.argv[2])
@@ -33,22 +40,18 @@ files = []
 # r=root, d=directories, f = files
 for r, d, f in os.walk(path):
     for file in f:
-        if '.cpp' in file:
+        if file.endswith('.pri'):
             files.append(os.path.join(r, file))
-        elif '.h' in file:
+        elif file.endswith('.h'):
             files.append(os.path.join(r, file))
-        elif '.pro' in file:
+        elif file.endswith('.pro'):      
             files.append(os.path.join(r, file))
-        elif '.pri' in file:
+        elif file.endswith('.cpp'):
             files.append(os.path.join(r, file))
 for f in files:
-    print(f)
-    
+    yearUpdate(f)
+
 check = input('These files will be altered, are you sure you want to proceed? Y/N: ')
 if check == 'n' or check == 'N':
     print('The script will be exited. You can restart the procedure with the correct path')
     sys.exit(0)
-else:
-    '''do the processing'''
-
-
