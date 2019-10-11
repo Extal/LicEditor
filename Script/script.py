@@ -3,16 +3,23 @@ import sys
 import os
 import csv
 import re
-'''
-R=re.compile("\d\d\d\d")
+
+R=re.compile("\D+(\d\d\d\d)-(\d\d\d\d)\D+")
 def yearUpdate( filepath ):
-    with open(filepath) as f:
+    with open(filepath,'r+') as f:
         lines = [line.rstrip('\n') for line in open(filepath)]
-        lines = [next(i) for x in range(5)]
         for x in lines:
-            date = re.match("(\d\d\d\d)",str(lines(x))
+            '''date = re.match(R,str(x))'''
+            for date in R.finditer(x):
+                if date:
+                    print(filepath)
+                    print(date.groups())
+                    if date.group(2)<"2019":
+                        '''R.sub('2019',str(x),count=2)'''
+                        str(x).replace(str(date.group(2)),"2019")
+                        print(str(x))
         
-'''
+
 parser = argparse.ArgumentParser(description='Update Copyright for GAMS files.')
 parser.add_argument('-p', help='folder path for the repository')
 """parser.add_argument('-y', help='Current year') will be implemented later either with a date module or manually"""
@@ -29,8 +36,8 @@ except:
     parser.print_help()
     sys.exit(0)
 
-"""data_folder = Path()"""
 args = parser.parse_args()
+"""data_folder = Path()"""
 """
 print(args)
 print(sys.argv)
@@ -52,13 +59,7 @@ for r, d, f in os.walk(path):
         elif file.endswith('.cpp'):
             files.append(os.path.join(r, file))
 for f in files:
-    '''yearUpdate(f)'''
-     with open(f) as f:
-    lines = [line.rstrip('\n') for line in open(f)]
-    '''lines = [next(i) for x in range(5)]'''
-    for x in lines:
-            date = re.match("(\d\d\d\d)",str(lines(x))
-            print(date)
+    yearUpdate(f)
 
 check = input('These files will be altered, are you sure you want to proceed? Y/N: ')
 if check == 'n' or check == 'N':
