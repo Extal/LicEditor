@@ -6,20 +6,22 @@ import re
 
 R=re.compile("\D+(\d\d\d\d)-(\d\d\d\d)\D+")
 def yearUpdate( filepath ):
-    with open(filepath,'r+') as f:
-        lines = [line.rstrip('\n') for line in open(filepath)]
-        for x in lines:
-            '''date = re.match(R,str(x))'''
-            for date in R.finditer(x):
-                if date:
-                    print(filepath)
-                    print(date.groups())
-                    if date.group(2)<"2019":
-                        '''R.sub('2019',str(x),count=2)'''
-                        str(x).replace(str(date.group(2)),"2019")
-                        print(str(x))
+    content = ''
+    Check = False
+    with open(filepath) as f:
+        content = f.read()
+        for date in R.finditer(content):
+            if date:
+                if date.group(2)<"2019":
+                    content = content.replace(date.group(2),"2019")
+                    Check = True
+    f.close()
+    if Check:
+        with open(filepath,'w') as f:
+            f.write(content)
+            Check = False
+        f.close()
         
-
 parser = argparse.ArgumentParser(description='Update Copyright for GAMS files.')
 parser.add_argument('-p', help='folder path for the repository')
 """parser.add_argument('-y', help='Current year') will be implemented later either with a date module or manually"""
