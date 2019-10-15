@@ -19,7 +19,6 @@ def yearUpdate( filepath ):
     if Check:
         with open(filepath,'w') as f:
             f.write(content)
-            Check = False
         f.close()
         
 parser = argparse.ArgumentParser(description='Update Copyright for GAMS files.')
