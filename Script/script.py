@@ -5,7 +5,7 @@ import csv
 import re
 
 R=re.compile("\D+(\d\d\d\d)-(\d\d\d\d)\D+")
-def yearUpdate( filepath ):
+def processFile( filepath ):
     content = ''
     Check = False
     with open(filepath) as f:
@@ -13,10 +13,16 @@ def yearUpdate( filepath ):
         for date in R.finditer(content):
             if date:
                 if date.group(2)<"2019":
+                    print(filepath)
                     content = content.replace(date.group(2),"2019")
                     Check = True
     f.close()
-    if Check:
+    if Check == False:
+        content = ''
+    return content
+
+def update(filepath, content):
+    if content != '':
         with open(filepath,'w') as f:
             f.write(content)
         f.close()
@@ -24,6 +30,7 @@ def yearUpdate( filepath ):
 parser = argparse.ArgumentParser(description='Update Copyright for GAMS files.')
 parser.add_argument('-p', help='folder path for the repository')
 """parser.add_argument('-y', help='Current year') will be implemented later either with a date module or manually"""
+parser.add_argument('--dry_run', help='show the user the files to be altered')
 
 """if there are no arguments show help"""
 if len(sys.argv)==1:
@@ -44,8 +51,8 @@ print(args)
 print(sys.argv)
 print(sys.argv[2]) inline function"""
 
-""" get the files list """
-path = str(sys.argv[2])
+
+path = str(sys.argv[len(sys.argv)-1])
 
 files = []
 # r=root, d=directories, f = files
@@ -60,9 +67,8 @@ for r, d, f in os.walk(path):
         elif file.endswith('.cpp'):
             files.append(os.path.join(r, file))
 for f in files:
-    yearUpdate(f)
-
-check = input('These files will be altered, are you sure you want to proceed? Y/N: ')
-if check == 'n' or check == 'N':
-    print('The script will be exited. You can restart the procedure with the correct path')
-    sys.exit(0)
+    processFile(f)
+    if len(sys.argv)<4:
+        update(f,processFile(f))
+if len(sys.argv)>3:
+    print('You are in a dry run mode. These are the files to be changed after executing the script.')
