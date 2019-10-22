@@ -47,11 +47,13 @@ except:
     sys.exit(0)
 
 args = parser.parse_args()
+pathindex = sys.argv.index('-p') +1 
+path = str(sys.argv[pathindex])
 
-path = str(sys.argv[len(sys.argv)-1])
-
-if len(sys.argv)>3:
+dryrunmode = False
+if '--dry_run' in sys.argv:
     print('You are in a dry run mode. These are the files to be changed after executing the script:')
+    dryrunmode = True
 
 files = []
 # r=root, d=directories, f = files
@@ -67,5 +69,5 @@ for r, d, f in os.walk(path):
             files.append(os.path.join(r, file))
 for f in files:
     processFile(f)
-    if len(sys.argv)<4:
+    if dryrunmode == False:
         update(f,processFile(f))
