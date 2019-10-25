@@ -26,8 +26,6 @@ def licenseExistanceCheck(string,extension):
     else:
         return ("/*" in lines[0])
 
-
-
 def processFile( filepath ):
     content = ''
     Check = False
@@ -93,8 +91,8 @@ parser.add_argument('-l','--license', help='The license file directory')
 """if there are no arguments show help"""
 if len(sys.argv)==1:
     parser.print_help(sys.stderr)
-    sys.exit(1)   
-    
+    sys.exit(1)
+
 """if there are incorrect arguments, show help"""
 try:
     options = parser.parse_args()
@@ -146,9 +144,13 @@ for r, d, f in os.walk(path):
             files.append(os.path.join(r, file))
         elif file.endswith('.h'):
             files.append(os.path.join(r, file))
-        elif file.endswith('.pro'):      
+        elif file.endswith('.pro'):
             files.append(os.path.join(r, file))
         elif file.endswith('.cpp'):
+            files.append(os.path.join(r, file))
+        elif file.endswith('.rc'):
+            files.append(os.path.join(r, file))
+        elif file.endswith('.mm'):
             files.append(os.path.join(r, file))
 for f in files:
     if dryrunmode == True:
